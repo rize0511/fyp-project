@@ -1,0 +1,794 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopSmart</title>
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='webpage.css') }}">    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+  href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'jost', sans-serif;
+    list-style: none;
+    text-decoration: none;
+
+}
+
+
+header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px, 10%;
+    height: 80px;
+    color: #bcd4e6;
+
+}
+.logo{
+    height: 150px;
+     width: auto;
+}
+.navmenu{
+    display: flex;
+}
+
+.navmenu a{
+    color: #2c2c2c;
+    font-size: 16px;
+    text-transform: capitalize;
+    padding: 10px 20px;
+    font-weight: 400;
+    transition: all .42s ease;
+
+}
+.navmenu a:hover{
+    color: red;
+}
+.nav-icon{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.nav-icon i{
+    margin-right: 20px;
+    color: #2c2c2c;
+    font-size: 25px;
+    font-weight: 400;
+    transition: all .42s ease;
+
+}
+.nav-icon i:hover{
+    transform: scale(1.1);
+    color: #EE1C47;
+
+}
+
+#menu-icon{
+    font-size: 35px;
+    color: #2c2c2c;
+    z-index: 10001;
+    cursor: pointer;
+
+}
+section{
+    padding: 5% 10%;
+
+
+}
+.main-home{
+    width: 100%;
+    height: 100vh;
+    background-image: url('/static/Shopsmart.jpg');
+    background-position: center;
+    background-size: cover;
+    align-items: center;
+    grid-template-columns:repeat(1,1fr) ;
+
+}
+.main-text h5{
+    color: #EE1C47;
+    font-size: 16px;
+    text-transform: capitalize;
+    font-weight: 500;
+    margin-top: 10%;
+
+}
+.main-text h1{
+    color: #000;
+    font-size: 65px;
+    text-transform: capitalize;
+    line-height: 1.1;
+    font-weight: 600;
+    margin: 6px 0 10px;
+
+}
+.main-text p{
+    color: #333c56;
+    font-size: 20px;
+    font-style: italic;
+    margin-bottom: 20px;
+
+}
+.main-btn{
+    display: inline-block;
+    color: #111;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+    border: 2px solid#111;
+    padding: 12px 25px;
+    transition: all .42s ease;
+}
+.main-btn:hover{
+    background-color: #000;
+    color: white;
+
+}
+.main-btn i{
+    vertical-align: middle;
+}
+.down-arrow{
+    position: absolute;
+    top: 85%;
+    right: 2%;
+}
+.down i{
+    font-size: 30px;
+    color: #2c2c2c;
+    border: 2px solid #2c2c2c;
+    border-radius: 50px;
+    padding: 12px 12px;
+}
+.down i:hover{
+    background-color: #2c2c2c;
+    color: white;
+    transition: all .42s ease ;
+}
+header.sticky{
+    background: white;
+    padding: 20px 10%;
+    box-shadow: 0px 0px 10px rgb(0, 0, 0 / 10%);
+}
+.centre-text h2{
+    color: #111;
+    font-size: 28px;
+    text-transform: capitalize;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.centre-text span{
+    color: #EE1C47;
+}
+
+
+
+.login-info {
+      display: none;
+    }
+
+
+
+/* shop style */
+
+.shop{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.shop .shop_item{
+    width: 30%;
+    margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.shop .shop_item img{
+    width:75%;
+    height: 300px;
+     margin-bottom: 20px;
+    margin-left: 40px;
+    align-items: center;
+}
+
+.shop .product_info{
+    padding: 5px;
+}
+
+.shop .product_info h5{
+    font-size: 20px;
+    padding: 5px;
+}
+
+.shop .product_info .price{
+     font-size: 18px;
+     padding: 3px;
+}
+.shop .product_info .price span{
+     color:  rgb(255, 0, 247);
+}
+
+.shop .product_info button{
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      background: #111;
+      color: rgb(236, 138, 8);
+      margin-top: 15px;
+      cursor: pointer;
+      transition: .5s ease-in-out;
+}
+.shop .product_info button:hover{
+    border: 1px solid;
+    background: transparent;
+    color: #111;
+}
+
+
+/* cart page  */
+
+.bx-cart {
+    position: relative;
+}
+
+.cart {
+    position: absolute;
+    margin-top: -30px;
+    margin-left: 21px;
+    background-color: #d18640;
+    font-size: 12px;
+    font-weight: bold;
+    align-items: center;
+    line-height: 15px;
+    height: 20px;
+    width: 20px;
+    padding-top: -20px;
+    border-radius: 50%;
+    color: #111;
+    text-align: center;
+    line-height: 20px;
+
+
+}
+.footer {
+    background-color: #252525;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+
+
+}
+
+.f-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title{
+    width: 100%;
+    font-size: 50px;
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.input{
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    border-bottom: 1px solid #ffffff !important;
+}
+.mail-bt {
+    width: 100%;
+    float: left;
+    font-size: 18px;
+    color: #fff;
+    background-color: transparent;
+    padding: 5px 0px 5px 0px;
+    height: 60px;
+   border: 0px;
+   border: none;
+
+}
+.mail-bt {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    outline: none;
+    box-shadow: none;
+    padding: 5px;
+
+}
+.mail-bt:focus{
+    border-bottom: 2px solid white;
+    outline: none;
+    border-color: transparent;
+}
+.mail-bt::placeholder {
+    color: #fff;
+}
+.subscribe-bt {
+    width: 30%;
+    float: right;
+    font-size: 16px;
+    color: #f26522;
+    background-color: transparent;
+    padding: 20px 0px 5px 0px;
+    border-radius: 30px;
+    border: 0px;
+    text-transform: uppercase;
+    text-align: right;
+}
+.subscribe-bt a {
+    color: #f26522;
+}
+.subscribe-bt a:hover {
+    color: #ffffff;
+}
+ .footer-menu {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-menu ul {
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+}
+
+.footer-menu li {
+    float: left;
+    font-size: 16px;
+    color: #f1f1f1;
+    padding: 20px 10px 0px 10px;
+}
+
+.footer-menu li a {
+    color: #f1f1f1;
+}
+
+.footer-menu li a:hover {
+    color: #f26522;
+}
+
+.copyright{
+    width: 100%;
+    float: left;
+    background-color: #252525;
+    height: auto;
+}
+
+.copyright_text {
+    width: 100%;
+    float: left;
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px;
+    margin: 20px 0px;
+}
+
+.copyright_text a {
+    color: #ffffff;
+}
+
+.copyright_text a:hover {
+    color: #f26522;
+}
+.margin_top90 {
+    margin-top: 90px;
+}
+.search-btn, .close-btn{
+            width: 40px;
+            height: 40px;
+            font-size: 25px;
+            border: none;
+            color: black;
+            background-color: #F6F6F6;
+            cursor: pointer;
+            position: absolute;
+            transition: all 0.25s ease;
+        }
+        .close-btn{
+            color: orange ;
+            background-color:transparent;
+
+            z-index: -1 ;
+        }
+        .search-box{
+            width: 40px;
+            height: 40px;
+            padding:15px;
+            border-radius: 25px;
+            outline: none;
+            border: none;
+            transition: width 0.25s ease ;
+        }
+        .search{
+            display: flex;
+            align-items: center;
+
+
+        }
+        .active .search-box{
+            width: 250px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+        }
+        .active .search-btn{
+            transform: translate(210px, 2px) scale(0.8);
+            background-color: transparent;
+        }
+
+        .active .close-btn{
+            z-index: 0;
+            transform: translate(250px, 2px);
+
+        }
+
+        .sub-menu-wrap{
+            position: absolute;
+            top: 60%;
+            right: 2%;
+            width: 250px;
+            max-height: 0px;
+            overflow: hidden;
+            transition: max-height 0.5s;
+
+        }
+        .sub-menu-wrap.open-menu{
+            max-height: 400px;
+        }
+        .sub-menu{
+            background-color: white;
+            padding: 20px;
+            margin: 10px;
+        }
+        .user-info{
+          display: flex;
+          align-items: center;
+        }
+        .user-info h2{
+            font-weight: 500;
+            font-size: 17px;
+            color: black;
+        }
+        .user-info img{
+            width: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .sub-menu hr{
+            border: 0;
+            height: 1px;
+            width: 100%;
+            background: #ccc;
+            margin: 15px 0 10px;
+        }
+        .sub-menu-links{
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: grey;
+            margin: 12px 0;
+        }
+        .sub-menu-links p{
+            width: 100%;
+        }
+        .sub-menu-links i{
+            width: 40px;
+            color: rgb(112, 112, 112);
+            padding: 8px;
+            background: rgb(175, 174, 174);
+            border-radius: 50%;
+            margin-right: 15px;
+
+        }
+        .sub-menu-links i:hover{
+            color: white;
+        }
+
+        .sub-menu-links span{
+            font-size: 15px;
+            transform: translate(0.5s);
+        }
+        .sub-menu-links span:hover{
+            transform: translateX(5px);
+        }
+
+</style>
+
+</head>
+<body>
+    <header>
+        <img class="logo" src="{{ url_for('static', filename='LOGO (1).png') }}" alt="Logo">
+      <ul class="navmenu">
+        <li><a href="/shop">Home </a></li>
+        <li><a href=""> Deals </a></li>
+        <li><a href="stores.html">Stores </a></li>
+        <li><a href="">Price Tracker</a></li>
+
+      </ul>
+        <div class="nav-icon">
+        <div class="search ">
+                <input type="text" class="search-box" placeholder="search anything ">
+                <button class="search-btn"><i class='bx bx-search'></i></button>
+                <button class="close-btn"><i class="fa-regular fa-circle-xmark"></i></button>
+            </div>
+
+
+
+            <i class='bx bx-user' onclick="togglemenu()"></i>
+
+<div class="sub-menu-wrap" id="subMenu">
+    <div class="sub-menu">
+        <div class="user-info">
+            <img src="{{ url_for('static', filename='userimg.png') }}" alt="Logo">-->
+            <h2>Areej Fatima</h2>
+        </div>
+        <hr>
+
+        <a href="" class="sub-menu-links">
+            <i class='bx bx-user'></i>
+            <p>Edit Profle</p>
+            <span>></span>
+        </a>
+        <a href="" class="sub-menu-links">
+            <i class='bx bx-cog'></i>
+            <p>Settings & Privacy</p>
+            <span>></span>
+        </a>
+        <a href="" class="sub-menu-links">
+            <i class='bx bx-question-mark'></i>
+            <p>Help & Support</p>
+            <span>></span>
+        </a>
+        <a href="" class="sub-menu-links">
+            <i class='bx bx-log-out'></i>
+            <p>Logout</p>
+            <span>></span>
+        </a>
+    </div>
+</div>
+            <a href="/cart"><i class='bx bx-cart'></i>
+                <div class="cart">
+                    <div id="cart_amount"></div>
+               </div>
+                <div class="cart_page">
+                    <div class="shopping-cart" id="shopping_cart"></div>
+                    <div class="label" id="label"></div>
+                </div>
+            </a>
+
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+
+
+                            <!-- Deals Section  -->
+    <section class="main-home">
+        <div class="main-text">
+            <h5>Winter Collection</h5>
+            <h1>New Winter <br> Collection</h1>
+            <p>There's nothing like trend </p>
+
+<a href="/shop" class="main-btn">Shop Now <i class='bx bx-right-arrow-alt'></i></a>
+        </div>
+       <div class="down-arrow">
+        <a href="/shop" class="down"><i class='bx bx-down-arrow-alt'></i></a>
+       </div>
+    </section>
+
+    <section class="trending-products" id="trending">
+        <div class="centre-text">
+            <h2>Today's Best <span>Deals</span></h2>
+
+        </div>
+
+
+    <div class="products" id="productsContainer">
+
+    </div>
+
+
+<!-- shop -->
+
+ <div id="shop" class="shop"></div><br><br>
+ </section>
+
+
+          <!-- contact section -->
+           <section class="footer">
+            <div class="f-container">
+                <h1 class="title">Shop Smart </h1>
+                <div class="input">
+                    <input type="text" class="mail-bt" placeholder="Your Email" name="Your Email">
+                    <span class="subscribe-bt"><a href="#">Subscribe</a></span>
+                </div>
+                <div class="footer-menu">
+                    <ul>
+                        <li><a href="#">Stores</a></li>
+                        <li><a href="#">Price Tracker</a></li>
+                        <li><a href="#">Today's Deals</a></li>
+                        <li><a href="#">Customer Service</a></li>
+                     </ul>
+                </div>
+                <div class="location">
+                    Help Line  Number : <a href="#">+92 332 5973295</a>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <div class="c-container">
+                   <p class="copyright_text">© 2023 All Rights Reserved. </p>
+                </div>
+             </div>
+        </section>
+
+
+
+
+        <script >
+            const searchBox = document.querySelector('.search-box');
+         const searchBtn = document.querySelector('.search-btn');
+         const search = document.querySelector('.search');
+         const closeBtn = document.querySelector('.close-btn');
+
+         searchBtn.addEventListener('click', function(){
+           console.log(search.classList.contains('active'));
+           if(search.classList.contains('active')){
+             searchBox.value = ''
+           }
+           else {
+             search.classList.add('active');
+             searchBox.focus();
+           }
+         })
+
+         closeBtn.addEventListener('click', function(){
+           search.classList.remove('active');
+           searchBox.value = '';
+         })
+
+
+
+
+           </script>
+            <script>
+            let subMenu=document.getElementById("subMenu");
+            function togglemenu(){
+                subMenu.classList.toggle("open-menu");
+            }
+        </script>
+
+
+<script>
+
+let shopItemsData = [
+    {
+    "id": 1,
+    "name": "LimeLight",
+    "price": 10000,
+    "desc": "ASIM JOFA ISHQ-E-NAUBAHAR COLLECTION AJN-20 – Naheed Kashef Boutique",
+    "img": "https://gulsheza.pk/cdn/shop/products/WhatsAppImage2022-12-28at01.58.50.jpg?v=1672375388",
+
+},
+{
+    "id": 2,
+    "name": "Sana Safinaz",
+    "price": 3500,
+    "desc": "ASIM JOFA ISHQ-E-NAUBAHAR COLLECTION AJN-20 – Naheed Kashef Boutique",
+    "img": "https://natives.pk/cdn/shop/products/654823548523.jpg?v=1668489542&width=500"
+
+}, {
+    "id": 3,
+    "name": "Khaadi",
+    "price": 5500,
+    "desc": "ASIM JOFA ISHQ-E-NAUBAHAR COLLECTION AJN-20 – Naheed Kashef Boutique",
+    "img": "https://gulsheza.pk/cdn/shop/products/WhatsAppImage2022-12-28at01.58.50.jpg?v=1672375388"
+
+}, {
+    "id": 4,
+    "name": "Maria.B",
+    "price": 6000,
+    "desc": "ASIM JOFA ISHQ-E-NAUBAHAR COLLECTION AJN-20 – Naheed Kashef Boutique",
+    "img": "https://cdn-skin.sanaullastore.com/media/catalog/product/a/f/afsanay-by-florent-luxury-chikankari-khaddar-collection-2023-flk-1a-_1_.jpg"
+
+}, {
+    "id": 5,
+    "name": "Ethenic",
+    "price": 168,
+    "desc": "ASIM JOFA ISHQ-E-NAUBAHAR COLLECTION AJN-20 – Naheed Kashef Boutique",
+    "img": "https://cdn-skin.sanaullastore.com/media/catalog/product/e/l/elak-by-humdum-unstitched-winter-collection-2023-d-06-_3_.jpg"
+
+}
+]
+const shop = document.getElementById('shop')
+
+let basket = JSON.parse(localStorage.getItem('data')) || []
+
+let generateShop = () => {
+  shop.innerHTML = shopItemsData.map((x) => {
+
+      let {id,name,price,desc,img} = x
+
+    return `
+          <div class='shop_item'  id=prodcut-id-${id}>
+               <img src= '${img}' alt='' />
+               <div class='product_info' >
+                      <h5>${name}</h5>
+                      <p  class='price'> <span>PKR: </span> ${price} </p>
+                       <p> ${desc} </p>
+
+                       <button onclick ="add_to_cart('${id}','${name}','${price}','${img}')">Add to Cart </button>
+               </div>
+           </div>
+    `
+
+   })
+}
+
+let add_to_cart = (id,name,price,img) => {
+
+  basket.push({
+    id: id,
+    item: 1,
+    name: name,
+    price: price,
+    img:img
+    })
+
+  localStorage.setItem('data',JSON.stringify(basket))
+
+
+  calculate()
+}
+
+let calculate = () => {
+  let cart_icon = document.getElementById('cart_amount')
+  let cart_amount = basket.length
+
+   cart_icon.innerHTML = cart_amount
+}
+
+
+calculate()
+generateShop()
+
+</script>
+
+
+<!-- Inside your HTML template -->
+<script src="{{ url_for('static', filename='java.js') }}"></script>
+
+<!-- Inside your HTML template -->
+<script src="{{ url_for('static', filename='cart.js') }}"></script>
+<br><br><br><br>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+
+{% block head %}
+    {{ super() }}
+<!-- Inside the <head> section of your HTML templates -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="brand-products">
+    <h1>Products from {{ brand_name }}</h1>
+
+    <!-- Display each product for the specified brand -->
+    <div class="products-container">
+        {% for product in products %}
+        <div class="product">
+            <p class="source">{{ product.brand }}</p>  <!-- Display brand name -->
+            <a href="{{ product.productUrl }}">
+                <img src="{{ product.imageUrl }}" alt="{{ product.title }}">
+                <h2>{{ product.title }}</h2>
+                <p class="price">Price: {{ product.price }}</p>
+            </a>
+            <button onclick="addToCart('{{ product.title }}', '{{ product.productUrl }}', '{{ product.imageUrl }}', '{{ product.price }}', '{{ product.brand }}')">Add to Cart</button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

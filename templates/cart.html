@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<h1>Your Cart</h1>
+
+<div class="cart-container">
+    {% if cart_items %}
+        {% for item in cart_items %}
+            <div class="product">
+                <p class="source">{{ item.brand }}</p> <!-- Display brand name as store name -->
+                <a href="{{ item.productUrl }}">
+                    <img src="{{ item.imageUrl }}" alt="{{ item.title }}">
+                    <h2>{{ item.title }}</h2>
+                    <p class="price">Price: {{ item.price }}</p>
+                    <p class="source">Store: {{ item.brand }}</p> <!-- Display brand name as store name -->
+                </a>
+<!--                <button onclick="addToCart('{{ item.title }}', '{{ item.productUrl }}', '{{ item.imageUrl }}', '{{ item.price }}', '{{ item.brand }}')">Add to Cart</button>-->
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

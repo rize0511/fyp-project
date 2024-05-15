@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Page</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img class="logo" src="{{ url_for('static', filename='LOGO (1).png') }}" alt="Logo">
+
+    </div>
+
+    <nav class="navigation">
+        <a href="#">Stores</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact Us</a>
+        <a href="/help.html">Help</a>
+        <a href="#" onclick="viewCart()">Cart (<span id="cartCount">{{ cart_count }}</span>)</a> <!-- Cart display -->
+    </nav>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for products...">
+        <button class="btn" onclick="triggerSearch()">Search</button>
+    </div>
+</header>
+
+<div class="layout">
+    <aside class="sidebar">
+        <h3>Brands</h3>
+        <ul>
+            <!-- Brand links -->
+            <li class="brand-link"><a href="/brand/limelight">Limelight</a></li>
+            <li class="brand-link"><a href="/brand/khaadi">Khaadi</a></li>
+            <li class="brand-link"><a href="/brand/bareeze">Bareeze</a></li>
+            <li class="brand-link"><a href="/brand/baroque">Baroque</a></li>
+            <li class="brand-link"><a href="/brand/mohagni">mohagni</a></li>
+        </ul>
+
+        <div class="price-range">
+            <h3>Price Range</h3>
+            <!-- Price range inputs -->
+            <input type="number" id="minPrice" placeholder="Minimum Price" min="0">
+            <input type="number" id="maxPrice" placeholder="Maximum Price" min="0">
+            <!-- Apply button -->
+            <button class="apply-btn" onclick="filterByPriceRange()">Apply</button>
+        </div>
+<!--         <h3>Categories</h3>-->
+<!--        <ul>-->
+<!--            <li><a href="/category/stitched">Stitched Dresses</a></li>-->
+<!--            <li><a href="/category/embroidered">Embroidered Dresses</a></li>-->
+<!--            <li><a href="/category/unstiched">Unstitched Dresses</a></li>-->
+<!--            <li><a href="/category/pants">Pants</a></li>-->
+<!--        </ul>-->
+    </aside>
+    <div class="loader" id="loader"></div>
+
+    <div class="product-rows" id="productsContainer">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<script>
+    // Search and cart handling logic
+    function triggerSearch() {
+        var input = document.getElementById("searchInput");
+        var query = input.value.trim();
+
+        if (query.length > 1) {
+            const loader = document.getElementById("loader");
+            loader.style.display = "block";  // Show loader during search
+
+            fetch('/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById("productsContainer");
+                    container.innerHTML = "";  // Clear existing content
+
+                    data.forEach(product => {
+                        const productDiv = document.createElement("div");
+                        productDiv.className = "product";
+
+                        productDiv.innerHTML = `
+                            <p class="source">${product.brand}</p>
+                            <a href="${product.productUrl}">
+                                <img src="${product.imageUrl}" alt="${product.title}">
+                                <h2>${product.title}</h2>
+                                <p class="price">Price: ${product.price}</p>
+                            </a>
+                            <button class='cart' onclick="addToCart('${product.title}', '${product.productUrl}', '${product.imageUrl}', '${product.price}', '${product.brand}')">Add to Cart</button>
+                        `;
+
+                        container.appendChild(productDiv);
+                    });
+
+                    loader.style.display = "none";  // Hide loader when done
+                })
+                .catch(error => {
+                    console.error("Error during search:", error);
+                    loader.style.display = "none";  // Hide loader on error
+                });
+        }
+    }
+
+    function viewCart() {
+        window.location.href = '/cart';  // Navigate to the cart page
+    }
+
+    function addToCart(title, productUrl, imageUrl, price, brand) {
+        const product = {
+            title,
+            productUrl,
+            imageUrl,
+            price,
+            brand
+        };
+
+        fetch('/add-to-cart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(product)
+        })
+        .then(() => {
+            const cartCount = document.getElementById("cartCount");
+            cartCount.textContent = parseInt(cartCount.textContent) + 1;  // Update cart count
+        })
+        .catch(error => console.error("Error adding to cart:", error));
+    }
+
+    function filterByPriceRange() {
+        const minPrice = parseFloat(document.getElementById("minPrice").value);  // Parse minimum price
+        const maxPrice = parseFloat(document.getElementById("maxPrice").value);  // Parse maximum price
+
+        const loader = document.getElementById("loader");
+        loader.style.display = "block";  // Show loader during filtering
+
+        fetch('/price-filter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ minPrice, maxPrice })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById("productsContainer");
+            container.innerHTML = "";  // Clear existing content
+
+            data.forEach(product => {
+                const productDiv = document.createElement("div");
+                productDiv.className = "product";
+
+                productDiv.innerHTML = `
+                    <p class="source">${product.brand}</p>
+                    <a href="${product.productUrl}">
+                        <img src="${product.imageUrl}" alt="${product.title}">
+                        <h2>${product.title}</h2>
+                        <p class="price">Price: ${product.price}</p>
+                    </a>
+                    <button onclick="addToCart('${product.title}', '${product.productUrl}', '${product.imageUrl}', '${product.price}', '${product.brand}')">Add to Cart</button>
+                `;
+
+                container.appendChild(productDiv);
+            });
+
+            loader.style.display = "none";  // Hide loader when done
+        })
+        .catch(error => {
+            console.error("Error during price filter:", error);
+            loader.style.display = "none";  // Hide loader when error occurs
+        });
+    }
+</script>
+
+</body>
+</html>
